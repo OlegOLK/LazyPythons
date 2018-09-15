@@ -1,3 +1,4 @@
 /code/.vs/
-code/Test/bin
-code/Test/obj
+code/**/bin/
+code/**/obj/
+code/LazyPythons.Abstractions/obj/
