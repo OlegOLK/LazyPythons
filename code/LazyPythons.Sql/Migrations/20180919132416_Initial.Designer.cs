@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LazyPythons.Sql.Migrations
 {
     [DbContext(typeof(LazyPhytonsContext))]
-    [Migration("20180915214145_Initial")]
+    [Migration("20180919132416_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,7 +40,7 @@ namespace LazyPythons.Sql.Migrations
 
                     b.HasIndex("MenuId");
 
-                    b.ToTable("Beverage");
+                    b.ToTable("Beverages");
                 });
 
             modelBuilder.Entity("LazyPythons.Sql.Data.Caffe", b =>
@@ -51,6 +51,8 @@ namespace LazyPythons.Sql.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(255);
+
+                    b.Property<int>("DistanceFromOffice");
 
                     b.Property<bool>("IsFreeBeverages");
 
@@ -122,7 +124,7 @@ namespace LazyPythons.Sql.Migrations
             modelBuilder.Entity("LazyPythons.Sql.Data.Beverage", b =>
                 {
                     b.HasOne("LazyPythons.Sql.Data.Menu", "Menu")
-                        .WithMany("Beverage")
+                        .WithMany("Beverages")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

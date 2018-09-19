@@ -24,5 +24,6 @@ namespace LazyPythons.Sql.Data
         public bool IsFreeBeverages { get; set; }
         public int Lunch2Price { get; set; }
         public int Lunch3Price { get; set; }
+        public int DistanceFromOffice { get; set; }
     }
 }

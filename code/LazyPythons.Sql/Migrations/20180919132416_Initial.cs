@@ -21,7 +21,8 @@ namespace LazyPythons.Sql.Migrations
                     LinkToImage = table.Column<string>(nullable: true),
                     IsFreeBeverages = table.Column<bool>(nullable: false),
                     Lunch2Price = table.Column<int>(nullable: false),
-                    Lunch3Price = table.Column<int>(nullable: false)
+                    Lunch3Price = table.Column<int>(nullable: false),
+                    DistanceFromOffice = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,7 +49,7 @@ namespace LazyPythons.Sql.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Beverage",
+                name: "Beverages",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -92,7 +93,7 @@ namespace LazyPythons.Sql.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Beverages_MenuId",
-                table: "Beverage",
+                table: "Beverages",
                 column: "MenuId");
 
             migrationBuilder.CreateIndex(
@@ -110,7 +111,7 @@ namespace LazyPythons.Sql.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Beverage");
+                name: "Beverages");
 
             migrationBuilder.DropTable(
                 name: "Dishes");

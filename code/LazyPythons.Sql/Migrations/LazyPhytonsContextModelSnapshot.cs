@@ -38,7 +38,7 @@ namespace LazyPythons.Sql.Migrations
 
                     b.HasIndex("MenuId");
 
-                    b.ToTable("Beverage");
+                    b.ToTable("Beverages");
                 });
 
             modelBuilder.Entity("LazyPythons.Sql.Data.Caffe", b =>
@@ -49,6 +49,8 @@ namespace LazyPythons.Sql.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(255);
+
+                    b.Property<int>("DistanceFromOffice");
 
                     b.Property<bool>("IsFreeBeverages");
 
@@ -120,7 +122,7 @@ namespace LazyPythons.Sql.Migrations
             modelBuilder.Entity("LazyPythons.Sql.Data.Beverage", b =>
                 {
                     b.HasOne("LazyPythons.Sql.Data.Menu", "Menu")
-                        .WithMany("Beverage")
+                        .WithMany("Beverages")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LazyPythons.Abstractions.Models;
 using LazyPythons.Abstractions.Services;
@@ -20,39 +21,39 @@ namespace LazyPythons.Services
             return await _caffeRepository.GetAllCaffes().ConfigureAwait(false);
         }
 
-        public Task<IEnumerable<ICaffe>> GetCaffesInRange(long distance)
+        public async Task<IEnumerable<ICaffe>> GetCaffesInRange(long distance)
         {
-            throw new NotImplementedException();
+            return await _caffeRepository.GetCaffesInRange(distance).ConfigureAwait(false);
         }
 
-        public Task<ICaffe> GetCaffe(Guid id)
+        public async Task<ICaffe> GetCaffe(Guid id)
         {
-            throw new NotImplementedException();
+            return await _caffeRepository.GetCaffe(id).ConfigureAwait(false);
         }
 
-        public Task<ICaffe> GetCaffe(string name)
+        public async Task<ICaffe> GetCaffe(string name)
         {
-            throw new NotImplementedException();
+            return await _caffeRepository.GetCaffe(name).ConfigureAwait(false);
         }
 
-        public Task<IEnumerable<ICaffe>> GetCaffesWithFreeBeaverages()
+        public async Task<IEnumerable<ICaffe>> GetCaffesWithFreeBeaverages()
         {
-            throw new NotImplementedException();
+            return await _caffeRepository.GetCaffesWithFreeBeaverages().ConfigureAwait(false);
         }
 
-        public Task<IEnumerable<ICaffe>> GetCaffesWithRating(short rating)
+        public async Task<IEnumerable<ICaffe>> GetCaffesWithRating(short rating)
         {
-            throw new NotImplementedException();
+            return await _caffeRepository.GetCaffesWithRating(rating).ConfigureAwait(false);
         }
 
-        public Task<IEnumerable<ICaffe>> GetCaffesWithLunchPriceLessThan(int price)
+        public async Task<IEnumerable<ICaffe>> GetCaffesWithLunchPriceLessThan(int price)
         {
-            throw new NotImplementedException();
+            return await _caffeRepository.GetCaffesWithLunchPriceLessThan(price).ConfigureAwait(false);
         }
 
-        public Task<IEnumerable<ICaffe>> GetCaffesWithLunchPriceMoreThan(int price)
+        public async Task<IEnumerable<ICaffe>> GetCaffesWithLunchPriceMoreThan(int price)
         {
-            throw new NotImplementedException();
+            return await _caffeRepository.GetCaffesWithLunchPriceMoreThan(price).ConfigureAwait(false);
         }
     }
 }

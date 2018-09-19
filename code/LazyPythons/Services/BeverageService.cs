@@ -20,9 +20,9 @@ namespace LazyPythons.Services
             return await _beverageRepository.GetAllBeverages().ConfigureAwait(false);
         }
 
-        public Task<IBeverage> GeBeverage(Guid id)
+        public async Task<IBeverage> GeBeverage(Guid id)
         {
-            throw new NotImplementedException();
+            return await _beverageRepository.GeBeverage(id).ConfigureAwait(false);
         }
     }
 }

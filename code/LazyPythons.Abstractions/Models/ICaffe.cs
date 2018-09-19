@@ -14,5 +14,6 @@ namespace LazyPythons.Abstractions.Models
         bool IsFreeBeverages { get; }
         int Lunch2Price { get; }
         int Lunch3Price { get; }
+        int DistanceFromOffice { get; }
     }
 }
