@@ -1,5 +1,5 @@
 ﻿using System;
-namespace LPPhraseParser.Errors
+namespace LPCommandExecutor.Errors
 {
     public static class StringConstants
     {

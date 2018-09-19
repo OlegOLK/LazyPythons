@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using LazyPythons.Abstractions.Services;
 
-namespace LPPhraseParser
+namespace LPCommandExecutor
 {
     public interface IPhraseProcessor
     {
