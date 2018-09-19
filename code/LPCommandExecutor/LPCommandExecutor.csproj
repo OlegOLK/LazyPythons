@@ -8,4 +8,7 @@
     <ProjectReference Include="..\LazyPythons.Abstractions\LazyPythons.Abstractions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Parsers\Helper\ResponseBuilder.cs" />
+  </ItemGroup>
 </Project>

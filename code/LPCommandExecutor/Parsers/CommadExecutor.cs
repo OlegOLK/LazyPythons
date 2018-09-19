@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LazyPythons.Abstractions.Services;
-using LPCommandExecutor.Errors;
+using LPCommandExecutor.Response;
 
 namespace LPCommandExecutor
 {
@@ -21,14 +21,14 @@ namespace LPCommandExecutor
             Processors.Add(new ParserChipperThanN());
             Processors.Add(new ParserMenuInCaffeNamed());
             Processors.Add(new ParserPriceInCaffeNamed());
-            Processors.Add(new ParserRatingForCaffeNamed());
+            Processors.Add(new ParserCafesWithRating());
             Processors.Add(new ParserFreeBeverage());
             Processors.Add(new ParserAllCafes());
         }
 
-        public async Task<string> GetResponse(string command)
+        public async Task<IExecutorResponse> GetResponse(string command)
         {
-            string result = null;
+            IExecutorResponse result = null;
             foreach (IPhraseProcessor processor in Processors)
             {
                 try
@@ -46,7 +46,7 @@ namespace LPCommandExecutor
                 }
             }
 
-            return StringConstants.CAN_NOT_PARSE_REQUEST;
+            return new ExecutorResponse(StringConstants.CAN_NOT_PARSE_REQUEST);
         }
     }
 }

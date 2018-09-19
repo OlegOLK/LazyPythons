@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using LazyPythons.Abstractions.Services;
+using LPCommandExecutor.Response;
 
 namespace LPCommandExecutor
 {
     public interface IPhraseProcessor
     {
-        Task<string> ExecuteCommandAsync(string command, ICaffeService service);
+        Task<IExecutorResponse> ExecuteCommandAsync(string command, ICaffeService service);
 
     }
 }

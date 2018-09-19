@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LazyPythons.Abstractions.Services;
@@ -7,20 +6,18 @@ using LPCommandExecutor.Response;
 
 namespace LPCommandExecutor
 {
-    public class ParserNMinutesToGo : BaseParser
+    public class ParserCafesWithRating : BaseParser
     {
-        protected override string RegexStringPattern => StringConstants.NMinutesToGo;
+        protected override string RegexStringPattern => StringConstants.CafesWithRating;
 
         public override async Task<IExecutorResponse> ExecuteCommandAsync(string command, ICaffeService service)
         {
             GroupCollection commandParams = this.GetParametersList(command);
-
             var parameter = commandParams[1].Value;
 
-            //FIXME: @igk magik number 80 - meters per minute speed
-            var result = await service.GetCaffesInRange(Convert.ToInt32(parameter)/80).ConfigureAwait(false);
+            var result = await service.GetCaffesWithRating(Convert.ToInt16(parameter)).ConfigureAwait(false);
 
             return new ExecutorResponse(result);
-        }
+         }
     }
 }

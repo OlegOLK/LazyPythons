@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using LazyPythons.Abstractions.Models;
 using LazyPythons.Abstractions.Services;
+using LPCommandExecutor.Response;
 
 namespace LPCommandExecutor
 {
@@ -25,7 +28,7 @@ namespace LPCommandExecutor
             return regex.Match(command).Groups;
         }
 
-        public virtual Task<string> ExecuteCommandAsync(string command, ICaffeService service)
+        public virtual Task<IExecutorResponse> ExecuteCommandAsync(string command, ICaffeService service)
         {
             throw new NotImplementedException();
         }

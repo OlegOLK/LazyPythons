@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using LazyPythons.Abstractions.Services;
+using LazyPythons.Helper;
 using LPCommandExecutor;
+using LPCommandExecutor.Response;
 using Microsoft.Bot;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Core.Extensions;
@@ -38,10 +40,12 @@ namespace LazyPythons.Bot
                 //var t = result.Select(x=> x.Name).ToList();
                 // Echo back to the user whatever they typed.
 
-                CommadExecutor parser = new CommadExecutor(_service);
-                string response = await parser.GetResponse(context.Activity.Text);
+                CommadExecutor executor = new CommadExecutor(_service);
+                IExecutorResponse response = await executor.GetResponse(context.Activity.Text);
 
-                await context.SendActivity(response);
+                ResponseBuilder rbuilder = new ResponseBuilder();
+
+                await context.SendActivity(rbuilder.ExecutionToString(response));
             }
         }
     }

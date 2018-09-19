@@ -1,5 +1,5 @@
 ﻿using System;
-namespace LPCommandExecutor.Errors
+namespace LPCommandExecutor
 {
     public static class StringConstants
     {
@@ -10,19 +10,23 @@ namespace LPCommandExecutor.Errors
         public static string ChipperThanN = ".*lunch cheaper than (.*) hrn.*";
         public static string MenuInCaffeNamed = ".*menu in (.*)";
         public static string PriceInCaffeNamed = ".*lunch price in (.*)";
-        public static string RatingForCaffeNamed = ".*menu in (.*)";
+        public static string CafesWithRating = ".*cafes with rating (.*)";
         public static string NMettersToGo = ".*lunch in (.*) meters to go.*";
         public static string NMinutesToGo = ".*lunch in (.*) minutes to go.*";
         public static string FreeBeverage = ".*with free beverage.*";
         public static string AllCafes = ".*all cafes.*"; //??????
+        public static string Help = "/help";
 
 
-        //обеды в<n> минутах хотьбы
-        //обеды в окресности<n> метров
-        //обеды не дороже<n> грн
-        //обеды с бесплатными напитками
-        //меню обеда в кафе <name>
-        //цена обеда в кафе <name>
-        //оценка обеда в кафе <name>
+
+        public static string HelpResponse = "Available commands:\n\n"
+            + "lunch cheaper than <sum> hrn\n\n"
+            + "menu in <caffe name>\n\n"
+            + "lunch price in <caffe name>\n\n"
+            + "cafes with rating <rating>\n\n"
+            + "lunch in <distance> meters to go\n\n"
+            + "lunch in <count> minutes to go\n\n"
+            + "with free beverage\n\n"
+            + "all cafes\n\n";
     }
 }

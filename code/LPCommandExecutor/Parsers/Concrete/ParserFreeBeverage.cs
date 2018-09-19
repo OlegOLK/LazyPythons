@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LazyPythons.Abstractions.Services;
-using LPCommandExecutor.Errors;
+using LPCommandExecutor.Response;
 
 namespace LPCommandExecutor
 {
@@ -11,7 +11,7 @@ namespace LPCommandExecutor
     {
         protected override string RegexStringPattern => StringConstants.FreeBeverage;
 
-        public override async Task<string> ExecuteCommandAsync(string command, ICaffeService service)
+        public override async Task<IExecutorResponse> ExecuteCommandAsync(string command, ICaffeService service)
         {
             var regex = new Regex(this.RegexStringPattern, RegexOptions.IgnoreCase);
             if (!regex.IsMatch(command))
@@ -20,9 +20,8 @@ namespace LPCommandExecutor
             }
 
             var result = await service.GetCaffesWithFreeBeaverages().ConfigureAwait(false);
-            var t = result.Select(x => x.Name).ToList();
 
-            return "result: " + t.ToString();
+            return new ExecutorResponse(result);
          }
     }
 }

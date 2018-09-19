@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LazyPythons.Abstractions.Services;
-using LPCommandExecutor.Errors;
+using LPCommandExecutor.Response;
 
 namespace LPCommandExecutor
 {
@@ -10,7 +10,7 @@ namespace LPCommandExecutor
     {
         protected override string RegexStringPattern => StringConstants.PriceInCaffeNamed;
 
-        public override async Task<string> ExecuteCommandAsync(string command, ICaffeService service)
+        public override async Task<IExecutorResponse> ExecuteCommandAsync(string command, ICaffeService service)
         {
             GroupCollection commandParams = this.GetParametersList(command);
 
@@ -18,8 +18,8 @@ namespace LPCommandExecutor
 
             //FIXME: @igk hack to avoid compilation error
             await Task.Delay(1);
-
-            return "result parameter " + parameter;
+            //FIXME: not implemented!!!
+            return new ExecutorResponse("can not proceed menues");
         }
     }
 }
