@@ -1,7 +1,6 @@
 ﻿using System;
 using AutoMapper;
 using LazyPythons.Repositories;
-using LazyPythons.Sql.ConfigMappings;
 using LazyPythons.Sql.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

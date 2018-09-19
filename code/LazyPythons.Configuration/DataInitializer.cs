@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using LazyPythons.Sql;
-using LazyPythons.Sql.ConfigMappings;
 using LazyPythons.Sql.Initialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
