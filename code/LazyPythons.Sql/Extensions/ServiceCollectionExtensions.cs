@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using LazyPythons.Repositories;
+using LazyPythons.Sql.ConfigMappings;
 using LazyPythons.Sql.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,10 +13,13 @@ namespace LazyPythons.Sql.Extensions
     {
         public static IServiceCollection RegisterRepositories(this IServiceCollection services, IConfiguration configuration)
         {
-            string connection = configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<LazyPhytonsContext>(options =>
-                options.UseSqlServer(connection));
-
+            services.AddScoped(options =>
+                {
+                    var optionsBuilder = new DbContextOptionsBuilder<LazyPhytonsContext>();
+                    optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                    return optionsBuilder.Options;
+                });
+            
             services.AddTransient<IBeverageRepository, BeverageRepository>();
             services.AddTransient<IMenuRepository, MenuRepository>();
             services.AddTransient<ICaffeRepository, CaffeRepository>();

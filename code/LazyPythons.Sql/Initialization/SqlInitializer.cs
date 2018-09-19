@@ -3,24 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LazyPythons.Abstractions.Models;
+using LazyPythons.Sql.ConfigMappings;
 using LazyPythons.Sql.Data;
+using LazyPythons.Sql.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace LazyPythons.Sql.Initialization
 {
-    public class SqlInitializer
+    public class SqlInitializer : SqlRepository
     {
-        private readonly LazyPhytonsContext _context;
-        public SqlInitializer(LazyPhytonsContext context)
+        public SqlInitializer(DbContextOptions<LazyPhytonsContext> options) : base(options)
         {
-            _context = context;
+           
         }
 
         public void Initialize()
         {
-            if (_context.Caffes.Any())
+            using (var context = CreateLazyPhytonsContext())
             {
-                return;
+                if (context.Caffes.Any())
+                {
+                    return;
+                }
             }
+
             CreateTestCaffes();
             CreateTestMenu();
             CreateTestDishes();
@@ -29,75 +36,90 @@ namespace LazyPythons.Sql.Initialization
 
         public void CreateTestCaffes()
         {
-            _context.Caffes.Add(new Caffe()
+            using (var context = CreateLazyPhytonsContext())
             {
-                Description = "@Test Description",
-                LinkToImage = "@TestLink",
-                Name = "@TestName",
-                Notes = "@Notes",
-                Rating = 5,
-                IsFreeBeverages = true,
-                Latitude = (long)(48.466838),
-                Longitude = (long)(35.048002),
-                Lunch2Price = 110,
-                Lunch3Price = 120
-                //Location = "48.446431, 35.000474"
-            });
+                context.Caffes.Add(new Caffe()
+                {
+                    Description = "@Test Description",
+                    LinkToImage = "@TestLink",
+                    Name = "@TestName",
+                    Notes = "@Notes",
+                    Rating = 5,
+                    IsFreeBeverages = true,
+                    Latitude = (long) (48.466838),
+                    Longitude = (long) (35.048002),
+                    Lunch2Price = 110,
+                    Lunch3Price = 120,
+                    DistanceFromOffice = 100
+                });
 
-            _context.SaveChanges();
+                context.SaveChanges();
+            }
         }
 
         public void CreateTestMenu()
         {
-            var cafe = _context.Caffes.FirstOrDefault(x => x.Name.Equals("@TestName"));
-            if (cafe == null)
+            using (var context = CreateLazyPhytonsContext())
             {
-                return;
-            }
-            _context.Menus.Add(new Menu()
-            {
+                var cafe = context.Caffes.FirstOrDefault(x => x.Name.Equals("@TestName"));
+                if (cafe == null)
+                {
+                    return;
+                }
 
-                Notes = "@Notes",
-                Caffe = cafe
-            });
-            _context.SaveChanges();
+                context.Menus.Add(new Menu()
+                {
+
+                    Notes = "@Notes",
+                    Caffe = cafe
+                });
+                context.SaveChanges();
+            }
         }
 
         public void CreateTestDishes()
         {
-            var menu = _context.Menus.FirstOrDefault();
-            if (menu == null)
+            using (var context = CreateLazyPhytonsContext())
             {
-                return;
-            }
-            _context.Dishes.Add(new Dish()
-            {
+                var menu = context.Menus.FirstOrDefault();
+                if (menu == null)
+                {
+                    return;
+                }
 
-                Notes = "@Notes",
-                Category = DishCategories.Salad,
-                Name = "@Cesar",
-                LinkToImage = "@Image",
-                Menu = menu
-            });
-            _context.SaveChanges();
+                context.Dishes.Add(new Dish()
+                {
+
+                    Notes = "@Notes",
+                    Category = DishCategories.Salad,
+                    Name = "@Cesar",
+                    LinkToImage = "@Image",
+                    Menu = menu
+                });
+                context.SaveChanges();
+            }
         }
 
         public void CreateTestBeverages()
         {
-            var menu = _context.Menus.FirstOrDefault();
-            if (menu == null)
+            using (var context = CreateLazyPhytonsContext())
             {
-                return;
-            }
-            _context.Beverages.Add(new Beverage()
-            {
+                var menu = context.Menus.FirstOrDefault();
+                if (menu == null)
+                {
+                    return;
+                }
 
-                Notes = "@Notes",
-                Name = "@Tea",
-                LinkToImage = "@Image",
-                Menu = menu
-            });
-            _context.SaveChanges();
+                context.Beverages.Add(new Beverage()
+                {
+
+                    Notes = "@Notes",
+                    Name = "@Tea",
+                    LinkToImage = "@Image",
+                    Menu = menu
+                });
+                context.SaveChanges();
+            }
         }
     }
 }
