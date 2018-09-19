@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using LazyPythons.Models;
 using LazyPythons.Repositories;
-using LazyPythons.Sql.ConfigMappings;
 using LazyPythons.Sql.Mappers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
