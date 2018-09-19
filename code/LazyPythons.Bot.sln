@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyPythons", "LazyPythons\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyPythons.Configuration", "LazyPythons.Configuration\LazyPythons.Configuration.csproj", "{1DCE16B2-7C73-4889-8074-F31F36B826B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LPPhraseParser", "LPPhraseParser\LPPhraseParser.csproj", "{249FBA07-404C-4EB1-A843-0A5B8F0C4BD2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{1DCE16B2-7C73-4889-8074-F31F36B826B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DCE16B2-7C73-4889-8074-F31F36B826B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DCE16B2-7C73-4889-8074-F31F36B826B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{249FBA07-404C-4EB1-A843-0A5B8F0C4BD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{249FBA07-404C-4EB1-A843-0A5B8F0C4BD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{249FBA07-404C-4EB1-A843-0A5B8F0C4BD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{249FBA07-404C-4EB1-A843-0A5B8F0C4BD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
