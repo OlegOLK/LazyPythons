@@ -43,7 +43,7 @@ namespace LazyPythons.Bot
                 CommadExecutor executor = new CommadExecutor(_service);
                 IExecutorResponse response = await executor.GetResponse(context.Activity.Text);
 
-                ResponseBuilder rbuilder = new ResponseBuilder();
+                Visualizer rbuilder = new Visualizer();
 
                 await context.SendActivity(rbuilder.ExecutionToString(response));
             }
