@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using LazyPythons.Abstractions.Services;
+using LPCommandExecutor;
 using Microsoft.Bot;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Core.Extensions;
@@ -33,10 +34,14 @@ namespace LazyPythons.Bot
 
                 // Bump the turn count. 
                 state.TurnCount++;
-                var result = await _service.GetAllCaffes().ConfigureAwait(false);
-                var t = result.Select(x=> x.Name).ToList();
+                // var result = await _service.GetAllCaffes().ConfigureAwait(false);
+                //var t = result.Select(x=> x.Name).ToList();
                 // Echo back to the user whatever they typed.
-                await context.SendActivity($"HELLO OLK: {t[0]}");
+
+                CommadExecutor parser = new CommadExecutor(_service);
+                string response = await parser.GetResponse(context.Activity.Text);
+
+                await context.SendActivity(response);
             }
         }
     }

@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LazyPythons.Abstractions\LazyPythons.Abstractions.csproj" />
     <ProjectReference Include="..\LazyPythons.Configuration\LazyPythons.Configuration.csproj" />
+    <ProjectReference Include="..\LPCommandExecutor\LPCommandExecutor.csproj" />
   </ItemGroup>
 
 </Project>

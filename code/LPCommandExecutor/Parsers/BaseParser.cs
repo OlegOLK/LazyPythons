@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LazyPythons.Abstractions.Services;
 
-namespace LPPhraseParser
+namespace LPCommandExecutor
 {
     public class BaseParser : IPhraseProcessor
     {

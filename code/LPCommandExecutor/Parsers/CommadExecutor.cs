@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LazyPythons.Abstractions.Services;
-using LPPhraseParser.Errors;
+using LPCommandExecutor.Errors;
 
-namespace LPPhraseParser
+namespace LPCommandExecutor
 {
     public class CommadExecutor
     {
