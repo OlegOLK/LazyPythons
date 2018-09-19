@@ -12,14 +12,17 @@ namespace LPPhraseParser
 
         public override async Task<string> ExecuteCommandAsync(string command, ICaffeService service)
         {
-            GroupCollection commandParams = this.GetParametersList(command);
+            return await Task.Run(() =>
+             {
+                 GroupCollection commandParams = this.GetParametersList(command);
 
-            var parameter = commandParams[1].Value;
+                 var parameter = commandParams[1].Value;
 
-            //FIXME: @igk hack to avoid compilation error
-            await Task.Delay(1);
+                //FIXME: @igk hack to avoid compilation error
+                //await Task.Delay(1);
 
-            return "result parameter " + parameter;
+                return "result parameter " + parameter;
+             });
         }
     }
 }

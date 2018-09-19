@@ -15,19 +15,19 @@ namespace LazyPythons.Services
             _dishRepository = dishRepository;
         }
 
-        public Task<IEnumerable<IDish>> GetAllDishes()
+        public async Task<IEnumerable<IDish>> GetAllDishes()
         {
-            throw new NotImplementedException();
+            return await _dishRepository.GetAllDishes().ConfigureAwait(false);
         }
 
-        public Task<IEnumerable<IDish>> GetAllDishesByCategory(DishCategories category)
+        public async Task<IEnumerable<IDish>> GetAllDishesByCategory(DishCategories category)
         {
-            throw new NotImplementedException();
+            return await _dishRepository.GetAllDishesByCategory(category).ConfigureAwait(false);
         }
 
-        public Task<IDish> GetDish(Guid id)
+        public async Task<IDish> GetDish(Guid id)
         {
-            throw new NotImplementedException();
+            return await _dishRepository.GetDish(id).ConfigureAwait(false);
         }
     }
 }

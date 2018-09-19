@@ -15,7 +15,8 @@ namespace LazyPythons.Models
             Guid menuId,
             bool isFreeBeverages,
             int lunch2Price,
-            int lunch3Price)
+            int lunch3Price,
+            int distanceFromOffice)
         : base(id)
         {
             Name = name;
@@ -28,6 +29,7 @@ namespace LazyPythons.Models
             IsFreeBeverages = isFreeBeverages;
             Lunch2Price = lunch2Price;
             Lunch3Price = lunch3Price;
+            DistanceFromOffice = distanceFromOffice;
         }
         public string Name { get; }
         public string Description { get; }
@@ -39,5 +41,6 @@ namespace LazyPythons.Models
         public bool IsFreeBeverages { get; }
         public int Lunch2Price { get; }
         public int Lunch3Price { get; }
+        public int DistanceFromOffice { get; }
     }
 }

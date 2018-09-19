@@ -15,14 +15,14 @@ namespace LazyPythons.Services
             _menuRepository = menuRepository;
         }
 
-        public Task<IEnumerable<IMenu>> GetAllMenus()
+        public async Task<IEnumerable<IMenu>> GetAllMenus()
         {
-            throw new NotImplementedException();
+            return await _menuRepository.GetAllMenus().ConfigureAwait(false);
         }
 
-        public Task<IMenu> GetMenu(Guid id)
+        public async Task<IMenu> GetMenu(Guid id)
         {
-            throw new NotImplementedException();
+            return await _menuRepository.GetMenu(id).ConfigureAwait(false);
         }
     }
 }
