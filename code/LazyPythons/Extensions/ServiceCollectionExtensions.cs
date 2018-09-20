@@ -11,6 +11,7 @@ namespace LazyPythons.Extensions
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
+            services.AddTransient<IFridgeService, FridgeService>();
             services.AddTransient<IBeverageService, BeverageService>();
             services.AddTransient<IMenuService, MenuService>();
             services.AddTransient<ICaffeService, CaffeService>();

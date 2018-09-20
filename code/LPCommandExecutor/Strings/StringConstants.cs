@@ -17,6 +17,10 @@ namespace LPCommandExecutor
         public static string AllCafes = ".*all cafes.*"; //??????
         public static string Help = "/help";
 
+        public static string AllFreedgePositions = ".*all propositions.*";
+        public static string VoteForPosition = ".*vote for (.*)";
+        public static string AddPosition = ".*add proposition for a fridge (.*)";
+
 
 
         public static string HelpResponse = "Available commands:\n\n"

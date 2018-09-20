@@ -8,6 +8,7 @@ namespace LPCommandExecutor
     public interface IPhraseProcessor
     {
         Task<IExecutorResponse> ExecuteCommandAsync(string command);
+        Task<IExecutorResponse> ExecuteCommandAsync(string command, params object[] param);
 
     }
 }

@@ -41,21 +41,89 @@ namespace LazyPythons.Helper
 
             if (response.StringResponse != null)
             {
-                await this.Context.SendActivity(response.StringResponse);
+                await this.Context.SendActivity(response.StringResponse).ConfigureAwait(false);
             }
 
-            if (response.CafesResponse != null && EnumerableExtensions.Any(response.CafesResponse))
+            if (response.CafesResponse != null && response.CafesResponse.Any())
             {
-                await this.RespondToCaffe(response.CafesResponse);
+                await this.RespondToCaffe(response.CafesResponse).ConfigureAwait(false);
             }
 
             if (response.MenuViewModels != null && response.MenuViewModels.Any())
             {
-                await this.RespondToMenu(response.MenuViewModels);
+                await this.RespondToMenu(response.MenuViewModels).ConfigureAwait(false);
             }
 
+            if (response.FreedgeRecords != null && response.FreedgeRecords.Any())
+            {
+                await this.RespondToFreedgeRecords(response.FreedgeRecords).ConfigureAwait(false);
+            }
 
-           
+            if (response.VoteResponses != FridgeVoteResponses.Undefined)
+            {
+                await this.RespondToPositionVote(response.VoteResponses).ConfigureAwait(false);
+            }
+
+            if (response.AddResponses != FridgeAddResponses.Undefined)
+            {
+                await this.RespondToAddPosition(response.AddResponses).ConfigureAwait(false);
+            }
+
+        }
+
+        private async Task RespondToAddPosition(FridgeAddResponses addResponses)
+        {
+            string response = "";
+            switch (addResponses)
+            {
+                case FridgeAddResponses.Ok:
+                    response = $"# Hoorai your have manage to add new proposition\n";
+                    break;
+                case FridgeAddResponses.AlreadyExist:
+                    response = $"Unfortunately this proposition already exist\n";
+                    break;
+                case FridgeAddResponses.Fail:
+                    response = "Something went wrong\n";
+                    break;
+            }
+
+            await this.Context.SendActivity(response);
+        }
+
+        private async Task RespondToPositionVote(FridgeVoteResponses responseVoteResponses)
+        {
+            string response = "";
+            switch (responseVoteResponses)
+            {
+                case FridgeVoteResponses.Ok:
+                    response = $"Hoorai your vote counted\n";
+                    break;
+                case FridgeVoteResponses.AlreadyVoted:
+                    response = $"Unfortunately you already give a vote for this proposition\n";
+                    break;
+                case FridgeVoteResponses.Fail:
+                    response = "Something went wrong\n";
+                    break;
+            }
+
+            await this.Context.SendActivity(response);
+        }
+
+        private async Task RespondToFreedgeRecords(IEnumerable<IFridgeRecord> responseFreedgeRecords)
+        {
+            string response = "# Freedge positions \n\n";
+            foreach (var responseFreedgeRecord in responseFreedgeRecords)
+            {
+                response += this.RespondToFreedgeRecords(responseFreedgeRecord);
+
+            }
+
+            await this.Context.SendActivity(response);
+        }
+
+        private string RespondToFreedgeRecords(IFridgeRecord responseFridgeRecord)
+        {
+            return "* " + responseFridgeRecord.Name + "\t votes: " + responseFridgeRecord.Votes + "\n";
         }
 
         public async Task RespondToMenu(IEnumerable<MenuViewModel> menus)
@@ -118,7 +186,7 @@ namespace LazyPythons.Helper
         {
             foreach (ICaffe elem in cafes)
             {
-               await this.RespondToCaffe(elem);
+                await this.RespondToCaffe(elem);
             }
         }
 

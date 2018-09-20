@@ -41,7 +41,7 @@ namespace LazyPythons.Bot
                 // Echo back to the user whatever they typed.
 
              
-                IExecutorResponse response = await _executor.GetResponse(context.Activity.Text);
+                IExecutorResponse response = await _executor.GetResponse(context.Activity.Text, context.Activity.Conversation.Id);
 
                 Visualizer responder = new Visualizer(context);
 

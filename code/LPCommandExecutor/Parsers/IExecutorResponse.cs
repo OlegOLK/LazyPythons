@@ -12,6 +12,9 @@ namespace LPCommandExecutor.Response
         IEnumerable<IMenu> MenuesResponse { get; }
         IEnumerable<MenuViewModel> MenuViewModels { get; }
 
+        IEnumerable<IFridgeRecord> FreedgeRecords { get; }
+        FridgeVoteResponses VoteResponses { get; }
+        FridgeAddResponses AddResponses { get; }
         bool IsSomethingFound { get; }
     }
 }

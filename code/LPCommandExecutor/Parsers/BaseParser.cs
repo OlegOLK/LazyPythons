@@ -33,5 +33,9 @@ namespace LPCommandExecutor
             throw new NotImplementedException();
         }
 
+        public virtual Task<IExecutorResponse> ExecuteCommandAsync(string command, params object[] param)
+        {
+           return this.ExecuteCommandAsync(command);
+        }
     }
 }
