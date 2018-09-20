@@ -56,7 +56,7 @@ namespace LPCommandExecutor.Response
         {
             get
             {
-                return this.StringResponse != null || this.CafesResponse != null || this.MenuesResponse != null;
+                return this.StringResponse != null || this.CafesResponse != null || this.MenuesResponse != null || this.MenuViewModels !=null;
             }
         }
     }

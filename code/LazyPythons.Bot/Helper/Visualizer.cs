@@ -69,11 +69,11 @@ namespace LazyPythons.Helper
         public async Task RespondToMenu(MenuViewModel menu)
         {
             string response = "# Menu in caffe " + menu.CaffeName + "\n\n" +
-                              "## ![alt text](" + menu.LinkToImage + " \"menu image\")\n\n" +
-                              "## Dishes: \n\n" +
-                              FormatDishesResponse(menu.Dishes) +
+                              "![menu image](" + menu.LinkToImage + ")\n\n\n\n" +
+                              "\n\n## Dishes: \n\n" +
+                              FormatDishesResponse(menu.Dishes) + "\n\n" +
                               "## Beverages: \n\n" +
-                              FormatBeveragesResponse(menu.Beverages)
+                              FormatBeveragesResponse(menu.Beverages) + "\n\n"
                               + "\n\n***\n\n***\n\n\n\n";
 
             await this.Context.SendActivity(response);
@@ -88,10 +88,10 @@ namespace LazyPythons.Helper
                 foreach (IGrouping<DishCategories, IDish> grouppedDish in grouppedDishes)
                 {
                     var key = grouppedDish.Key;
-                    response += $"* **{key}**\n";
+                    response += $"\n\n##{key}\n\n";
                     foreach (IDish dish in grouppedDish)
                     {
-                        response += $"\t* {dish.Name}\t ![dish {dish.Name} image]( {dish.LinkToImage})\n";
+                        response += $"* ![{dish.Name}]({dish.LinkToImage})\n\n";
 
                     }
                 }
@@ -108,7 +108,7 @@ namespace LazyPythons.Helper
                 var menuBeverages = beverages as IBeverage[] ?? beverages.ToArray();
                 for (int i = 0; i < menuBeverages.Count(); i++)
                 {
-                    response += $"* {menuBeverages[i].Name}\t**Image:** {menuBeverages[i].LinkToImage}\n";
+                    response += $"* ![{menuBeverages[i].Name}]({menuBeverages[i].LinkToImage})\n\n\n\n";
                 }
             }
             return response;
