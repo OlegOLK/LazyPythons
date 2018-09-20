@@ -104,7 +104,7 @@ namespace LazyPythons.Helper
                 foreach (IGrouping<DishCategories, IDish> grouppedDish in grouppedDishes)
                 {
                     var key = grouppedDish.Key;
-                    await this.Context.SendActivity($"\n\n##{key}\n\n");
+                    await this.Context.SendActivity($"##{key}");
 
                     foreach (IDish dish in grouppedDish)
                     {
