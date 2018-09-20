@@ -8,22 +8,26 @@ namespace LPCommandExecutor
 {
     public class CommadExecutor
     {
-        private List<IPhraseProcessor> Processors;
-        private ICaffeService Service;
+        private IEnumerable<IPhraseProcessor> Processors;
+        //private ICaffeService Service;
+        //private readonly IMenuService _menuService;
 
-        public CommadExecutor(ICaffeService service)
+
+        public CommadExecutor(IEnumerable<IPhraseProcessor> processors)
         {
-            this.Service = service ?? throw new ArgumentNullException(nameof(service), "CommadExecutor: SERVICE can not be null!");
+            //this.Service = service ?? throw new ArgumentNullException(nameof(service), "CommadExecutor: SERVICE can not be null!");
+            //this._menuService = menuService ?? throw new ArgumentNullException(nameof(service), "CommadExecutor: SERVICE can not be null!");
 
-            Processors = new List<IPhraseProcessor>();
-            Processors.Add(new ParserNMinutesToGo());
-            Processors.Add(new ParserNMettersToGo());
-            Processors.Add(new ParserChipperThanN());
-            Processors.Add(new ParserMenuInCaffeNamed());
-            Processors.Add(new ParserPriceInCaffeNamed());
-            Processors.Add(new ParserCafesWithRating());
-            Processors.Add(new ParserFreeBeverage());
-            Processors.Add(new ParserAllCafes());
+
+            Processors = processors;
+            //Processors.Add(new ParserNMinutesToGo());
+            //Processors.Add(new ParserNMettersToGo());
+            //Processors.Add(new ParserChipperThanN());
+            //Processors.Add(new ParserMenuInCaffeNamed());
+            //Processors.Add(new ParserPriceInCaffeNamed());
+            //Processors.Add(new ParserCafesWithRating());
+            //Processors.Add(new ParserFreeBeverage());
+            //Processors.Add(new ParserAllCafes());
         }
 
         public async Task<IExecutorResponse> GetResponse(string command)
@@ -33,9 +37,9 @@ namespace LPCommandExecutor
             {
                 try
                 {
-                    result = await processor.ExecuteCommandAsync(command, this.Service);
+                    result = await processor.ExecuteCommandAsync(command);
                 }
-                catch
+                catch (Exception ex)
                 {
                     //do nothing
                 }

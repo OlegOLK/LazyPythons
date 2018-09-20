@@ -9,7 +9,7 @@ namespace LPCommandExecutor
     {
         protected override string RegexStringPattern => StringConstants.Help;
 
-        public override async Task<IExecutorResponse> ExecuteCommandAsync(string command, ICaffeService service)
+        public override async Task<IExecutorResponse> ExecuteCommandAsync(string command)
         {
             string result = null;
             if (command.Equals(RegexStringPattern))

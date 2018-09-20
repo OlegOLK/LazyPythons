@@ -10,5 +10,6 @@ namespace LazyPythons.Abstractions.Services
         Task<IEnumerable<IDish>> GetAllDishes();
         Task<IEnumerable<IDish>> GetAllDishesByCategory(DishCategories category);
         Task<IDish> GetDish(Guid id);
+        Task<IEnumerable<IDish>> GetAllDishesByMenuId(Guid menuId);
     }
 }

@@ -11,5 +11,6 @@ namespace LazyPythons.Repositories
         Task<IEnumerable<Dish>> GetAllDishes();
         Task<IEnumerable<Dish>> GetAllDishesByCategory(DishCategories category);
         Task<Dish> GetDish(Guid id);
+        Task<IEnumerable<Dish>> GetAllDishesByMenuId(Guid menuId);
     }
 }

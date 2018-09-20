@@ -28,7 +28,7 @@ namespace LPCommandExecutor
             return regex.Match(command).Groups;
         }
 
-        public virtual Task<IExecutorResponse> ExecuteCommandAsync(string command, ICaffeService service)
+        public virtual Task<IExecutorResponse> ExecuteCommandAsync(string command)
         {
             throw new NotImplementedException();
         }

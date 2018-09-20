@@ -44,5 +44,21 @@ namespace LazyPythons.Sql.Repositories
 
             return beverage?.ToApi();
         }
+
+        public async Task<IEnumerable<Beverage>> GetAllBeveragesByMenuId(Guid menuId)
+        {
+            List<Data.Beverage> beverages = null;
+            using (LazyPhytonsContext context = CreateLazyPhytonsContext())
+            {
+                beverages = await context.Beverages.AsNoTracking().Where(x=> x.MenuId.Equals(menuId)).ToListAsync().ConfigureAwait(false);
+            }
+
+            if (beverages == null)
+            {
+                return Enumerable.Empty<Beverage>();
+            }
+
+            return beverages.Select(x => x.ToApi()).ToList();
+        }
     }
 }

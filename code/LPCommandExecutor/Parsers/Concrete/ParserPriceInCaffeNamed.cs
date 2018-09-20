@@ -8,9 +8,14 @@ namespace LPCommandExecutor
 {
     public class ParserPriceInCaffeNamed : BaseParser
     {
+        private readonly ICaffeService _service;
+        public ParserPriceInCaffeNamed(ICaffeService service)
+        {
+            _service = service;
+        }
         protected override string RegexStringPattern => StringConstants.PriceInCaffeNamed;
 
-        public override async Task<IExecutorResponse> ExecuteCommandAsync(string command, ICaffeService service)
+        public override async Task<IExecutorResponse> ExecuteCommandAsync(string command)
         {
             GroupCollection commandParams = this.GetParametersList(command);
 

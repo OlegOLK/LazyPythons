@@ -13,10 +13,10 @@ namespace LazyPythons.Bot
 {
     public class EchoBot : IBot
     {
-        private readonly ICaffeService _service;
-        public EchoBot(ICaffeService service)
+        private readonly CommadExecutor _executor;
+        public EchoBot(CommadExecutor executor)
         {
-            _service = service;
+            _executor = executor;
         }
         /// <summary>
         /// Every Conversation turn for our EchoBot will call this method. In here
@@ -40,8 +40,8 @@ namespace LazyPythons.Bot
                 //var t = result.Select(x=> x.Name).ToList();
                 // Echo back to the user whatever they typed.
 
-                CommadExecutor executor = new CommadExecutor(_service);
-                IExecutorResponse response = await executor.GetResponse(context.Activity.Text);
+             
+                IExecutorResponse response = await _executor.GetResponse(context.Activity.Text);
 
                 Visualizer rbuilder = new Visualizer();
 

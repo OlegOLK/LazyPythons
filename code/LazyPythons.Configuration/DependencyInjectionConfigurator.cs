@@ -2,6 +2,7 @@
 using LazyPythons.Extensions;
 using Microsoft.Extensions.Configuration;
 using LazyPythons.Sql.Extensions;
+using LPCommandExecutor.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LazyPythons.Configuration
@@ -12,7 +13,7 @@ namespace LazyPythons.Configuration
         {
             services.RegisterServices();
             services.RegisterRepositories(configuration);
-
+            services.RegisterCommandExecutor();
             return services;
         }
     }

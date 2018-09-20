@@ -32,7 +32,7 @@ namespace LazyPythons.Sql.Repositories
                 return Enumerable.Empty<Caffe>();
             }
 
-            return caffes.Select(x => x.ToApi());
+            return caffes.Select(x => x.ToApi()).ToList();
         }
 
         public async Task<IEnumerable<Caffe>> GetCaffesInRange(long distance)
@@ -48,7 +48,7 @@ namespace LazyPythons.Sql.Repositories
                 return Enumerable.Empty<Caffe>();
             }
 
-            return caffes.Select(x => x.ToApi());
+            return caffes.Select(x => x.ToApi()).ToList();
         }
 
         public async Task<IEnumerable<ICaffe>> GetCaffesWithFreeBeaverages()
@@ -64,7 +64,7 @@ namespace LazyPythons.Sql.Repositories
                 return Enumerable.Empty<Caffe>();
             }
 
-            return caffes.Select(x => x.ToApi());
+            return caffes.Select(x => x.ToApi()).ToList();
         }
 
         public async Task<Caffe> GetCaffe(Guid id)
@@ -94,7 +94,7 @@ namespace LazyPythons.Sql.Repositories
             List<Data.Caffe> caffes = null;
             using (LazyPhytonsContext context = CreateLazyPhytonsContext())
             {
-                caffes = await context.Caffes.AsNoTracking().Where(x => x.Lunch3Price <= price).ToListAsync().ConfigureAwait(false);
+                caffes = await context.Caffes.AsNoTracking().Where(x => x.Lunch3Price <= price || x.Lunch2Price <= price).ToListAsync().ConfigureAwait(false);
             }
 
             if (caffes == null)
@@ -102,7 +102,7 @@ namespace LazyPythons.Sql.Repositories
                 return Enumerable.Empty<Caffe>();
             }
 
-            return caffes.Select(x => x.ToApi());
+            return caffes.Select(x => x.ToApi()).ToList();
         }
 
         public async Task<IEnumerable<ICaffe>> GetCaffesWithLunchPriceMoreThan(int price)
@@ -110,7 +110,7 @@ namespace LazyPythons.Sql.Repositories
             List<Data.Caffe> caffes = null;
             using (LazyPhytonsContext context = CreateLazyPhytonsContext())
             {
-                caffes = await context.Caffes.AsNoTracking().Where(x => x.Lunch3Price > price).ToListAsync().ConfigureAwait(false);
+                caffes = await context.Caffes.AsNoTracking().Where(x => x.Lunch3Price > price || x.Lunch2Price > price).ToListAsync().ConfigureAwait(false);
             }
 
             if (caffes == null)
@@ -118,7 +118,7 @@ namespace LazyPythons.Sql.Repositories
                 return Enumerable.Empty<Caffe>();
             }
 
-            return caffes.Select(x => x.ToApi());
+            return caffes.Select(x => x.ToApi()).ToList();
         }
 
         public async Task<IEnumerable<ICaffe>> GetCaffesWithRating(short rating)
@@ -134,7 +134,7 @@ namespace LazyPythons.Sql.Repositories
                 return Enumerable.Empty<Caffe>();
             }
 
-            return caffes.Select(x => x.ToApi());
+            return caffes.Select(x => x.ToApi()).ToList();
         }
 
     }
