@@ -20,6 +20,10 @@ namespace LazyPythons.Sql
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Dish> Dishes { get; set; }
         public DbSet<Beverage> Beverages { get; set; }
+        public DbSet<FridgeRecord> FreedgeRecords { get; set; }
+        public DbSet<VotingPerson> VotingPersons { get; set; }
+        public DbSet<FridgeRecordsVotingPersons> FreedgeRecordsVotingPersons { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Caffe>()
@@ -44,6 +48,23 @@ namespace LazyPythons.Sql
                 .Property(dish => dish.Category)
                 .HasConversion(category => category.ToString(),
                     category => (DishCategories)Enum.Parse(typeof(DishCategories), category));
+
+            modelBuilder.Entity<VotingPerson>()
+                .HasIndex(x => x.User)
+                .IsUnique(true);
+
+            modelBuilder.Entity<FridgeRecordsVotingPersons>()
+                .HasKey(fv => new {fv.FreedgeRecordId, fv.VotingPersonId});
+
+            modelBuilder.Entity<FridgeRecordsVotingPersons>()
+                .HasOne(x => x.FridgeRecord)
+                .WithMany(x => x.FreedgeRecordsVotingPersons)
+                .HasForeignKey(x => x.FreedgeRecordId);
+
+            modelBuilder.Entity<FridgeRecordsVotingPersons>()
+                .HasOne(x => x.VotingPerson)
+                .WithMany(x => x.FridgeRecordsVotingPersons)
+                .HasForeignKey(x => x.VotingPersonId);
         }
     }
 }

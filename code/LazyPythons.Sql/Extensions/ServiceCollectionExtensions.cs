@@ -18,7 +18,8 @@ namespace LazyPythons.Sql.Extensions
                     optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
                     return optionsBuilder.Options;
                 });
-            
+
+            services.AddTransient<IFridgeRepository, FridgeRepository>();
             services.AddTransient<IBeverageRepository, BeverageRepository>();
             services.AddTransient<IMenuRepository, MenuRepository>();
             services.AddTransient<ICaffeRepository, CaffeRepository>();

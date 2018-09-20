@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LPCommandExecutor.Parsers.Concrete;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LPCommandExecutor.Extensions
@@ -9,6 +10,10 @@ namespace LPCommandExecutor.Extensions
     {
         public static IServiceCollection RegisterCommandExecutor(this IServiceCollection services)
         {
+            services.AddScoped<IPhraseProcessor, ParserAddProposition>();
+            services.AddScoped<IPhraseProcessor, ParserVoteForProposition>();
+            services.AddScoped<IPhraseProcessor, ParserAllPropositions>();
+
             services.AddScoped<IPhraseProcessor, ParserNMinutesToGo>();
             services.AddScoped<IPhraseProcessor, ParserNMettersToGo>();
             services.AddScoped<IPhraseProcessor, ParserChipperThanN>();

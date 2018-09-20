@@ -52,5 +52,29 @@ namespace LPCommandExecutor
 
             return new ExecutorResponse(StringConstants.CAN_NOT_PARSE_REQUEST);
         }
+
+        public async Task<IExecutorResponse> GetResponse(string command, params object[] param)
+        {
+            IExecutorResponse result = null;
+            foreach (IPhraseProcessor processor in Processors)
+            {
+                try
+                {
+                    result = await processor.ExecuteCommandAsync(command, param);
+                }
+                catch (Exception ex)
+                {
+                    //do nothing
+                }
+
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+
+            return new ExecutorResponse(StringConstants.CAN_NOT_PARSE_REQUEST);
+        }
+
     }
 }
