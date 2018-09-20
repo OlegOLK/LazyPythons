@@ -20,18 +20,6 @@ namespace LazyPythons.Helper
             this.Context = context;
         }
 
-        //string Name { get; }
-        //string Description { get; }
-        //long Latitude { get; }
-        //long Longitude { get; }
-        //short Rating { get; }
-        //string LinkToImage { get; }
-        //Guid MenuId { get; }
-        //bool IsFreeBeverages { get; }
-        //int Lunch2Price { get; }
-        //int Lunch3Price { get; }
-        //int DistanceFromOffice { get; }
-
         public async Task RespondToExecution(IExecutorResponse response)
         {
             if (!response.IsSomethingFound)
@@ -59,6 +47,26 @@ namespace LazyPythons.Helper
            
         }
 
+        private IMessageActivity CreateReplyWith(string text, string imageLink, string imageName)
+        {
+            Attachment attachment = new Attachment();
+            attachment.ContentType = "image/jpg";
+            attachment.ContentUrl = imageLink;
+            attachment.Name = imageName;
+
+            IMessageActivity reply;
+
+            if (text == null){
+                reply = this.Context.Activity.CreateReply();
+            } else {
+                reply = this.Context.Activity.CreateReply(text);
+            }
+
+            reply.Attachments.Add(attachment);
+
+            return reply;
+        }
+
         public async Task RespondToMenu(IEnumerable<MenuViewModel> menus)
         {
             bool showDetailedMenu = (menus.Count() == 1);
@@ -72,13 +80,7 @@ namespace LazyPythons.Helper
         {
             string response = "# Menu in caffe " + menu.CaffeName + "\n\n";
 
-            Attachment attachment = new Attachment();
-            attachment.ContentType = "image/jpg";
-            attachment.ContentUrl = menu.LinkToImage;
-            attachment.Name = "";
-
-            IMessageActivity reply = this.Context.Activity.CreateReply(response);
-            reply.Attachments.Add(attachment);
+            IMessageActivity reply = this.CreateReplyWith(response, menu.LinkToImage, "current menu");
 
             await this.Context.SendActivity(reply);
 
@@ -106,13 +108,7 @@ namespace LazyPythons.Helper
 
                     foreach (IDish dish in grouppedDish)
                     {
-                        Attachment attachment = new Attachment();
-                        attachment.ContentType = "image/jpg";
-                        attachment.ContentUrl = dish.LinkToImage;
-                        attachment.Name = dish.Name;
-
-                        IMessageActivity reply = this.Context.Activity.CreateReply();
-                        reply.Attachments.Add(attachment);
+                        IMessageActivity reply = this.CreateReplyWith(null , dish.LinkToImage, dish.Name);
 
                         await this.Context.SendActivity(reply);
                     }
@@ -127,13 +123,7 @@ namespace LazyPythons.Helper
                 var menuBeverages = beverages as IBeverage[] ?? beverages.ToArray();
                 for (int i = 0; i < menuBeverages.Count(); i++)
                 {
-                    Attachment attachment = new Attachment();
-                    attachment.ContentType = "image/jpg";
-                    attachment.ContentUrl = menuBeverages[i].LinkToImage;
-                    attachment.Name = menuBeverages[i].Name;
-
-                    IMessageActivity reply = this.Context.Activity.CreateReply();
-                    reply.Attachments.Add(attachment);
+                    IMessageActivity reply = this.CreateReplyWith(null, menuBeverages[i].LinkToImage, menuBeverages[i].Name);
 
                     await this.Context.SendActivity(reply);
                 }

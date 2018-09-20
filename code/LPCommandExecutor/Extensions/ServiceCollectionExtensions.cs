@@ -17,6 +17,7 @@ namespace LPCommandExecutor.Extensions
             services.AddScoped<IPhraseProcessor, ParserCafesWithRating>();
             services.AddScoped<IPhraseProcessor, ParserFreeBeverage>();
             services.AddScoped<IPhraseProcessor, ParserAllCafes>();
+            services.AddScoped<IPhraseProcessor, ParserHelp>();
 
             services.AddScoped<CommadExecutor, CommadExecutor>();
 

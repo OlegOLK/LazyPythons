@@ -24,7 +24,7 @@ namespace LPCommandExecutor
             var parameter = commandParams[1].Value;
 
             //FIXME: @igk magik number 80 - meters per minute speed
-            var result = await _service.GetCaffesInRange(Convert.ToInt32(parameter)/80).ConfigureAwait(false);
+            var result = await _service.GetCaffesInRange(Convert.ToInt32(parameter)*80).ConfigureAwait(false);
 
             return new ExecutorResponse(result);
         }

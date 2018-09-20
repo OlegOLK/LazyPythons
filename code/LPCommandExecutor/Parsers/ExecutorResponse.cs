@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LazyPythons.Abstractions.Models;
 using LPCommandExecutor.ViewModels;
 
@@ -56,7 +57,11 @@ namespace LPCommandExecutor.Response
         {
             get
             {
-                return this.StringResponse != null || this.CafesResponse != null || this.MenuesResponse != null || this.MenuViewModels !=null;
+                bool caffeAvailable = (this.CafesResponse != null && Enumerable.Count(this.CafesResponse) > 0);
+                bool menuAvailable = (this.MenuesResponse != null && Enumerable.Count(this.MenuesResponse) > 0);
+                bool menuModelsAvailable = (this.MenuViewModels != null && Enumerable.Count(this.MenuViewModels) > 0);
+
+                return this.StringResponse != null || caffeAvailable || menuAvailable || menuModelsAvailable;
             }
         }
     }
