@@ -6,6 +6,7 @@ using LazyPythons.Abstractions.Models;
 using LPCommandExecutor.Response;
 using LPCommandExecutor.ViewModels;
 using Microsoft.Bot.Builder;
+using Microsoft.Bot.Schema;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace LazyPythons.Helper
@@ -18,18 +19,6 @@ namespace LazyPythons.Helper
         {
             this.Context = context;
         }
-
-        //string Name { get; }
-        //string Description { get; }
-        //long Latitude { get; }
-        //long Longitude { get; }
-        //short Rating { get; }
-        //string LinkToImage { get; }
-        //Guid MenuId { get; }
-        //bool IsFreeBeverages { get; }
-        //int Lunch2Price { get; }
-        //int Lunch3Price { get; }
-        //int DistanceFromOffice { get; }
 
         public async Task RespondToExecution(IExecutorResponse response)
         {
@@ -126,60 +115,87 @@ namespace LazyPythons.Helper
             return "* " + responseFridgeRecord.Name + "\t votes: " + responseFridgeRecord.Votes + "\n";
         }
 
+        private IMessageActivity CreateReplyWith(string text, string imageLink, string imageName)
+        {
+            Attachment attachment = new Attachment();
+            attachment.ContentType = "image/jpg";
+            attachment.ContentUrl = imageLink;
+            attachment.Name = imageName;
+
+            IMessageActivity reply;
+
+            if (text == null){
+                reply = this.Context.Activity.CreateReply();
+            } else {
+                reply = this.Context.Activity.CreateReply(text);
+            }
+
+            reply.Attachments.Add(attachment);
+
+            return reply;
+        }
+
         public async Task RespondToMenu(IEnumerable<MenuViewModel> menus)
         {
+            bool showDetailedMenu = (menus.Count() == 1);
             foreach (MenuViewModel elem in menus)
             {
-                await this.RespondToMenu(elem);
+                await this.RespondToMenu(elem, showDetailedMenu);
             }
         }
 
-        public async Task RespondToMenu(MenuViewModel menu)
+        public async Task RespondToMenu(MenuViewModel menu, bool showDetailedMenu)
         {
-            string response = "# Menu in caffe " + menu.CaffeName + "\n\n" +
-                              "## ![alt text](" + menu.LinkToImage + " \"menu image\")\n\n" +
-                              "## Dishes: \n\n" +
-                              FormatDishesResponse(menu.Dishes) +
-                              "## Beverages: \n\n" +
-                              FormatBeveragesResponse(menu.Beverages)
-                              + "\n\n***\n\n***\n\n\n\n";
+            string response = "# Menu in caffe " + menu.CaffeName + "\n\n";
 
-            await this.Context.SendActivity(response);
+            IMessageActivity reply = this.CreateReplyWith(response, menu.LinkToImage, "current menu");
+
+            await this.Context.SendActivity(reply);
+
+            if (showDetailedMenu)
+            { 
+                await this.Context.SendActivity("\n\n## Dishes:\n\n\n\n");
+
+                await this.FormatDishesResponse(menu.Dishes);
+
+                await this.Context.SendActivity("\n\n## Beverages:\n\n\n\n");
+
+                await this.FormatBeveragesResponse(menu.Beverages);
+            }
         }
 
-        public string FormatDishesResponse(IEnumerable<IDish> dishes)
+        public async Task FormatDishesResponse(IEnumerable<IDish> dishes)
         {
-            string response = "";
             if (dishes != null)
             {
                 var grouppedDishes = dishes.GroupBy(x => x.Category);
                 foreach (IGrouping<DishCategories, IDish> grouppedDish in grouppedDishes)
                 {
                     var key = grouppedDish.Key;
-                    response += $"* **{key}**\n";
+                    await this.Context.SendActivity($"\n\n##{key}\n\n");
+
                     foreach (IDish dish in grouppedDish)
                     {
-                        response += $"\t* {dish.Name}\t ![dish {dish.Name} image]( {dish.LinkToImage})\n";
+                        IMessageActivity reply = this.CreateReplyWith(null , dish.LinkToImage, dish.Name);
 
+                        await this.Context.SendActivity(reply);
                     }
                 }
-
             }
-            return response;
         }
 
-        public string FormatBeveragesResponse(IEnumerable<IBeverage> beverages)
+        public async Task FormatBeveragesResponse(IEnumerable<IBeverage> beverages)
         {
-            string response = "";
             if (beverages != null)
             {
                 var menuBeverages = beverages as IBeverage[] ?? beverages.ToArray();
                 for (int i = 0; i < menuBeverages.Count(); i++)
                 {
-                    response += $"* {menuBeverages[i].Name}\t**Image:** {menuBeverages[i].LinkToImage}\n";
+                    IMessageActivity reply = this.CreateReplyWith(null, menuBeverages[i].LinkToImage, menuBeverages[i].Name);
+
+                    await this.Context.SendActivity(reply);
                 }
             }
-            return response;
         }
 
         public async Task RespondToCaffe(IEnumerable<ICaffe> cafes)
