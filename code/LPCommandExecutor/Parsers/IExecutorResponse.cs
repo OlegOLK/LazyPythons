@@ -11,5 +11,7 @@ namespace LPCommandExecutor.Response
         IEnumerable<ICaffe> CafesResponse { get; }
         IEnumerable<IMenu> MenuesResponse { get; }
         IEnumerable<MenuViewModel> MenuViewModels { get; }
+
+        bool IsSomethingFound { get; }
     }
 }

@@ -1,15 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using LazyPythons.Abstractions.Models;
 using LPCommandExecutor.Response;
 using LPCommandExecutor.ViewModels;
+using Microsoft.Bot.Builder;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace LazyPythons.Helper
 {
     public class Visualizer
     {
+        private ITurnContext Context;
+
+        public Visualizer(ITurnContext context)
+        {
+            this.Context = context;
+        }
+
         //string Name { get; }
         //string Description { get; }
         //long Latitude { get; }
@@ -22,38 +31,42 @@ namespace LazyPythons.Helper
         //int Lunch3Price { get; }
         //int DistanceFromOffice { get; }
 
-        public string ExecutionToString(IExecutorResponse response)
+        public async Task RespondToExecution(IExecutorResponse response)
         {
+            if (!response.IsSomethingFound)
+            {
+                await this.Context.SendActivity("Sorry, but nothing was found :(");
+                return;
+            }
+
             if (response.StringResponse != null)
             {
-                return response.StringResponse;
+                await this.Context.SendActivity(response.StringResponse);
             }
 
             if (response.CafesResponse != null && EnumerableExtensions.Any(response.CafesResponse))
             {
-                return this.CaffeToString(response.CafesResponse);
+                await this.RespondToCaffe(response.CafesResponse);
             }
 
             if (response.MenuViewModels != null && response.MenuViewModels.Any())
             {
-                return this.MenuViewModelToString(response.MenuViewModels);
+                await this.RespondToMenu(response.MenuViewModels);
             }
 
-            return "Sorry, but nothing was found :(";
+
+           
         }
 
-        public string MenuViewModelToString(IEnumerable<MenuViewModel> menus)
+        public async Task RespondToMenu(IEnumerable<MenuViewModel> menus)
         {
-            string response = "";
             foreach (MenuViewModel elem in menus)
             {
-                response = response + this.MenuViewModelToString(elem);
+                await this.RespondToMenu(elem);
             }
-
-            return response;
         }
 
-        public string MenuViewModelToString(MenuViewModel menu)
+        public async Task RespondToMenu(MenuViewModel menu)
         {
             string response = "# Menu in caffe " + menu.CaffeName + "\n\n" +
                               "## ![alt text](" + menu.LinkToImage + " \"menu image\")\n\n" +
@@ -63,7 +76,7 @@ namespace LazyPythons.Helper
                               FormatBeveragesResponse(menu.Beverages)
                               + "\n\n***\n\n***\n\n\n\n";
 
-            return response;
+            await this.Context.SendActivity(response);
         }
 
         public string FormatDishesResponse(IEnumerable<IDish> dishes)
@@ -101,18 +114,15 @@ namespace LazyPythons.Helper
             return response;
         }
 
-        public string CaffeToString(IEnumerable<ICaffe> cafes)
+        public async Task RespondToCaffe(IEnumerable<ICaffe> cafes)
         {
-            string response = "";
             foreach (ICaffe elem in cafes)
             {
-                response = response + this.CaffeToString(elem);
+               await this.RespondToCaffe(elem);
             }
-
-            return response;
         }
 
-        public string CaffeToString(ICaffe caffe)
+        public async Task RespondToCaffe(ICaffe caffe)
         {
             float time = caffe.DistanceFromOffice / 80;
             string response = "###" + caffe.Name + "\n\n"
@@ -125,7 +135,7 @@ namespace LazyPythons.Helper
                             + "approximately " + time.ToString("0") + " minutes to go\n\n"
                             + "\n\n***\n\n***\n\n\n\n";
 
-            return response;
+            await this.Context.SendActivity(response);
         }
     }
 }

@@ -51,5 +51,13 @@ namespace LPCommandExecutor.Response
             get;
             private set;
         }
+
+        public bool IsSomethingFound
+        {
+            get
+            {
+                return this.StringResponse != null || this.CafesResponse != null || this.MenuesResponse != null;
+            }
+        }
     }
 }

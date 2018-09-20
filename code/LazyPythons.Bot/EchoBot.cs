@@ -43,9 +43,9 @@ namespace LazyPythons.Bot
              
                 IExecutorResponse response = await _executor.GetResponse(context.Activity.Text);
 
-                Visualizer rbuilder = new Visualizer();
+                Visualizer responder = new Visualizer(context);
 
-                await context.SendActivity(rbuilder.ExecutionToString(response));
+                await responder.RespondToExecution(response);
             }
         }
     }
