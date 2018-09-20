@@ -7,24 +7,26 @@ namespace LazyPythons.Models
 {
     public class Menu : Entity, IMenu
     {
-        public Menu(Guid id, Guid caffeId, IEnumerable<Guid> dishIds, IEnumerable<Guid> beverageIds) : base(id)
+        public Menu(Guid id, Guid caffeId, string linkToImage, IEnumerable<Guid> dishes, IEnumerable<Guid> beverages) : base(id)
         {
             CaffeId = caffeId;
-            if (dishIds == null)
+            if (dishes == null)
             {
                 DishIds = Enumerable.Empty<Guid>();
             }
 
-            DishIds = dishIds;
+            LinkToImage = linkToImage;
+            DishIds = dishes;
 
-            if (beverageIds == null)
+            if (beverages == null)
             {
                 BeverageIds = Enumerable.Empty<Guid>();
             }
 
-            BeverageIds = beverageIds;
+            BeverageIds = beverages;
         }
         public Guid CaffeId { get; }
+        public string LinkToImage { get; }
         public IEnumerable<Guid> DishIds { get; }
         public IEnumerable<Guid> BeverageIds { get; }
     }

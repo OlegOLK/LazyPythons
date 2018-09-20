@@ -29,5 +29,10 @@ namespace LazyPythons.Services
         {
             return await _dishRepository.GetDish(id).ConfigureAwait(false);
         }
+
+        public async Task<IEnumerable<IDish>> GetAllDishesByMenuId(Guid menuId)
+        {
+            return await _dishRepository.GetAllDishesByMenuId(menuId).ConfigureAwait(false);
+        }
     }
 }

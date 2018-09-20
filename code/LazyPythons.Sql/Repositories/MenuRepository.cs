@@ -25,7 +25,7 @@ namespace LazyPythons.Sql.Repositories
             {
                 menus = await context.Menus.AsNoTracking().ToListAsync().ConfigureAwait(false);
             }
-            
+
             if (menus == null)
             {
                 return Enumerable.Empty<Menu>();
@@ -40,6 +40,17 @@ namespace LazyPythons.Sql.Repositories
             using (var context = CreateLazyPhytonsContext())
             {
                 menu = await context.Menus.AsNoTracking().FirstOrDefaultAsync(x => x.Id.Equals(id)).ConfigureAwait(false);
+            }
+
+            return menu?.ToApi();
+        }
+
+        public async Task<Menu> GetMenuByCaffeId(Guid id)
+        {
+            Data.Menu menu = null;
+            using (var context = CreateLazyPhytonsContext())
+            {
+                menu = await context.Menus.AsNoTracking().FirstOrDefaultAsync(x => x.CaffeId.Equals(id)).ConfigureAwait(false);
             }
 
             return menu?.ToApi();

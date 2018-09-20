@@ -11,7 +11,7 @@ namespace LazyPythons.Sql.Data
         public Caffe Caffe { get; set; }
 
         public string Notes { get; set; }
-
+        public string LinkToImage { get; set; }
         public List<Dish> Dishes { get; set; }
         public List<Beverage> Beverages { get; set; }
 

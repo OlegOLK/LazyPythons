@@ -9,9 +9,15 @@ namespace LPCommandExecutor
 {
     public class ParserFreeBeverage : BaseParser
     {
+        private readonly ICaffeService _service;
+        public ParserFreeBeverage(ICaffeService service)
+        {
+            _service = service;
+        }
+
         protected override string RegexStringPattern => StringConstants.FreeBeverage;
 
-        public override async Task<IExecutorResponse> ExecuteCommandAsync(string command, ICaffeService service)
+        public override async Task<IExecutorResponse> ExecuteCommandAsync(string command)
         {
             var regex = new Regex(this.RegexStringPattern, RegexOptions.IgnoreCase);
             if (!regex.IsMatch(command))
@@ -19,7 +25,7 @@ namespace LPCommandExecutor
                 return null;
             }
 
-            var result = await service.GetCaffesWithFreeBeaverages().ConfigureAwait(false);
+            var result = await _service.GetCaffesWithFreeBeaverages().ConfigureAwait(false);
 
             return new ExecutorResponse(result);
          }

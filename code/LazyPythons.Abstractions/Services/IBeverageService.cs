@@ -9,5 +9,6 @@ namespace LazyPythons.Abstractions.Services
     {
         Task<IEnumerable<IBeverage>> GetAllBeverages();
         Task<IBeverage> GeBeverage(Guid id);
+        Task<IEnumerable<IBeverage>> GetAllBeveragesByMenuId(Guid menuId);
     }
 }

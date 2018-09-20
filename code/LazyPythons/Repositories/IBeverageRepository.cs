@@ -9,5 +9,6 @@ namespace LazyPythons.Repositories
     {
         Task<IEnumerable<Beverage>> GetAllBeverages();
         Task<Beverage> GeBeverage(Guid id);
+        Task<IEnumerable<Beverage>> GetAllBeveragesByMenuId(Guid menuId);
     }
 }

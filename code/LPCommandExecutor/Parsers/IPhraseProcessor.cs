@@ -7,7 +7,7 @@ namespace LPCommandExecutor
 {
     public interface IPhraseProcessor
     {
-        Task<IExecutorResponse> ExecuteCommandAsync(string command, ICaffeService service);
+        Task<IExecutorResponse> ExecuteCommandAsync(string command);
 
     }
 }

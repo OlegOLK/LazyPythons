@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LazyPythons.Sql\LazyPythons.Sql.csproj" />
     <ProjectReference Include="..\LazyPythons\LazyPythons.csproj" />
+    <ProjectReference Include="..\LPCommandExecutor\LPCommandExecutor.csproj" />
   </ItemGroup>
 
 </Project>

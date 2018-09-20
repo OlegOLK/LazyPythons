@@ -62,5 +62,22 @@ namespace LazyPythons.Sql.Repositories
 
             return dish?.ToApi();
         }
+
+        public async Task<IEnumerable<Dish>> GetAllDishesByMenuId(Guid menuId)
+        {
+            List<Data.Dish> dishes = null;
+            using (LazyPhytonsContext context = CreateLazyPhytonsContext())
+            {
+                dishes = await context.Dishes.AsNoTracking().Where(x => x.MenuId.Equals(menuId)).ToListAsync()
+                    .ConfigureAwait(false);
+            }
+
+            if (dishes == null)
+            {
+                return Enumerable.Empty<Dish>();
+            }
+
+            return dishes.Select(x => x.ToApi()).ToList();
+        }
     }
 }

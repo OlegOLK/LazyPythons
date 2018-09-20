@@ -9,6 +9,7 @@ using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace LazyPythons.Bot
 {
@@ -71,7 +72,7 @@ namespace LazyPythons.Bot
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider provider)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider provider, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -79,6 +80,7 @@ namespace LazyPythons.Bot
             }
 
             DataInitializer.Seed(provider);
+            loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Trace);
 
             app.UseDefaultFiles()
                 .UseStaticFiles()

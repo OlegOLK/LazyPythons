@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using LazyPythons.Abstractions.Models;
+using LPCommandExecutor.ViewModels;
 
 namespace LPCommandExecutor.Response
 {
     public class ExecutorResponse : IExecutorResponse
     {
-        
+
         public ExecutorResponse(string response)
         {
             this.StringResponse = response;
@@ -22,6 +23,11 @@ namespace LPCommandExecutor.Response
             this.MenuesResponse = response;
         }
 
+        public ExecutorResponse(IEnumerable<MenuViewModel> response)
+        {
+            this.MenuViewModels = response;
+        }
+
         public string StringResponse
         {
             get;
@@ -35,6 +41,12 @@ namespace LPCommandExecutor.Response
         }
 
         public IEnumerable<IMenu> MenuesResponse
+        {
+            get;
+            private set;
+        }
+
+        public IEnumerable<MenuViewModel> MenuViewModels
         {
             get;
             private set;
