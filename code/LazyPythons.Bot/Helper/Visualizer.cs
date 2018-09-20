@@ -6,6 +6,7 @@ using LazyPythons.Abstractions.Models;
 using LPCommandExecutor.Response;
 using LPCommandExecutor.ViewModels;
 using Microsoft.Bot.Builder;
+using Microsoft.Bot.Schema;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace LazyPythons.Helper
@@ -60,58 +61,83 @@ namespace LazyPythons.Helper
 
         public async Task RespondToMenu(IEnumerable<MenuViewModel> menus)
         {
+            bool showDetailedMenu = (menus.Count() == 1);
             foreach (MenuViewModel elem in menus)
             {
-                await this.RespondToMenu(elem);
+                await this.RespondToMenu(elem, showDetailedMenu);
             }
         }
 
-        public async Task RespondToMenu(MenuViewModel menu)
+        public async Task RespondToMenu(MenuViewModel menu, bool showDetailedMenu)
         {
-            string response = "# Menu in caffe " + menu.CaffeName + "\n\n" +
-                              "![menu image](" + menu.LinkToImage + ")\n\n\n\n" +
-                              "\n\n## Dishes: \n\n" +
-                              FormatDishesResponse(menu.Dishes) + "\n\n" +
-                              "## Beverages: \n\n" +
-                              FormatBeveragesResponse(menu.Beverages) + "\n\n"
-                              + "\n\n***\n\n***\n\n\n\n";
+            string response = "# Menu in caffe " + menu.CaffeName + "\n\n";
 
-            await this.Context.SendActivity(response);
+            Attachment attachment = new Attachment();
+            attachment.ContentType = "image/jpg";
+            attachment.ContentUrl = menu.LinkToImage;
+            attachment.Name = "";
+
+            IMessageActivity reply = this.Context.Activity.CreateReply(response);
+            reply.Attachments.Add(attachment);
+
+            await this.Context.SendActivity(reply);
+
+            if (showDetailedMenu)
+            { 
+                await this.Context.SendActivity("\n\n## Dishes:\n\n\n\n");
+
+                await this.FormatDishesResponse(menu.Dishes);
+
+                await this.Context.SendActivity("\n\n## Beverages:\n\n\n\n");
+
+                await this.FormatBeveragesResponse(menu.Beverages);
+            }
         }
 
-        public string FormatDishesResponse(IEnumerable<IDish> dishes)
+        public async Task FormatDishesResponse(IEnumerable<IDish> dishes)
         {
-            string response = "";
             if (dishes != null)
             {
                 var grouppedDishes = dishes.GroupBy(x => x.Category);
                 foreach (IGrouping<DishCategories, IDish> grouppedDish in grouppedDishes)
                 {
                     var key = grouppedDish.Key;
-                    response += $"\n\n##{key}\n\n";
+                    await this.Context.SendActivity($"\n\n##{key}\n\n");
+
                     foreach (IDish dish in grouppedDish)
                     {
-                        response += $"* ![{dish.Name}]({dish.LinkToImage})\n\n";
+                        Attachment attachment = new Attachment();
+                        attachment.ContentType = "image/jpg";
+                        attachment.ContentUrl = dish.LinkToImage;
+                        attachment.Name = dish.Name;
 
+                        IMessageActivity reply = this.Context.Activity.CreateReply();
+                        reply.Attachments.Add(attachment);
+
+                        await this.Context.SendActivity(reply);
                     }
                 }
-
             }
-            return response;
         }
 
-        public string FormatBeveragesResponse(IEnumerable<IBeverage> beverages)
+        public async Task FormatBeveragesResponse(IEnumerable<IBeverage> beverages)
         {
-            string response = "";
             if (beverages != null)
             {
                 var menuBeverages = beverages as IBeverage[] ?? beverages.ToArray();
                 for (int i = 0; i < menuBeverages.Count(); i++)
                 {
-                    response += $"* ![{menuBeverages[i].Name}]({menuBeverages[i].LinkToImage})\n\n\n\n";
+                    Attachment attachment = new Attachment();
+                    attachment.ContentType = "image/jpg";
+                    attachment.ContentUrl = menuBeverages[i].LinkToImage;
+                    attachment.Name = menuBeverages[i].Name;
+
+                    IMessageActivity reply = this.Context.Activity.CreateReply();
+                    reply.Attachments.Add(attachment);
+
+                    await this.Context.SendActivity(reply);
                 }
             }
-            return response;
         }
 
         public async Task RespondToCaffe(IEnumerable<ICaffe> cafes)
